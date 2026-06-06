@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loba Flow | Automatize seus atendimentos e agendamentos</title>
+  <meta name="description" content="O Loba Flow responde, organiza e agenda seus clientes automaticamente no WhatsApp. Entre para a lista VIP e tenha acesso exclusivo antecipado.">
+  
+  <!-- SEO Open Graph -->
+  <meta property="og:title" content="Loba Flow | Sua agenda pode funcionar sozinha.">
+  <meta property="og:description" content="Atendimento e agendamento automático no WhatsApp para mulheres empreendedoras. Entre na Lista VIP.">
+  <meta property="og:type" content="website">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ROOT SYSTEM */
+    :root {
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dark: #9E782F;
+      --gold-glow: rgba(212, 175, 55, 0.15);
+      --gold-glow-strong: rgba(212, 175, 55, 0.4);
+      --amber: #FFBF00;
+      --black-bg: #050505;
+      --black-card: #0E0E10;
+      --black-card-hover: #141418;
+      --black-nav: rgba(5, 5, 5, 0.75);
+      --gray-text: #86868B;
+      --gray-light: #E5E5EA;
+      --light-text: #F5F5F7;
+      --border: rgba(212, 175, 55, 0.08);
+      --border-hover: rgba(212, 175, 55, 0.22);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* RESET & CORE STYLES */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--black-bg);
+      color: var(--light-text);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.625;
+      overflow-x: hidden;
+    }
+
+    /* Fine grain overlay for premium feel */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* CONTAINER & TYPOGRAPHY */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--light-text);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      color: var(--gray-text);
+    }
+
+    strong {
+      color: var(--light-text);
+      font-weight: 600;
+    }
+
+    /* BUTTONS & INPUTS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+      background-size: 200% auto;
+      color: #000;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 20px var(--gold-glow);
+      text-decoration: none;
+      text-shadow: 0 0.5px 0px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn:hover {
+      background-position: right center;
+      box-shadow: 0 6px 24px var(--gold-glow-strong);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--light-text);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 18px;
+      width: 100%;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(14, 14, 16, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 16px;
+      font-size: 15px;
+      color: var(--light-text);
+      font-family: var(--font-sans);
+      transition: var(--transition-smooth);
+      backdrop-filter: blur(10px);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 15px var(--gold-glow);
+      background: rgba(20, 20, 24, 0.9);
+    }
+
+    .form-input::placeholder {
+      color: #555;
+    }
+
+    /* FLOAT LABEL UX */
+    .input-group label {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-text);
+      pointer-events: none;
+      transition: var(--transition-smooth);
+      font-size: 15px;
+    }
+
+    .form-input:focus ~ label,
+    .form-input:not(:placeholder-shown) ~ label {
+      top: 0;
+      transform: translateY(-50%) scale(0.8);
+      background: var(--black-card);
+      padding: 0 6px;
+      color: var(--gold);
+      left: 12px;
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition-smooth);
+    }
+
+    nav.scrolled {
+      background: var(--black-nav);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 48px;
+    }
+
+    .nav-logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-svg {
+      width: 38px;
+      height: 38px;
+      color: var(--gold);
+      filter: drop-shadow(0 0 4px var(--gold-glow));
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--light-text);
+    }
+
+    .logo-text span {
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .nav-btn {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+    }
+
+    /* HERO SECTION (100% Fold) */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 140px 0 80px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/loba_hero_bg.png');
+      background-size: cover;
+      background-position: center right;
+      opacity: 0.35;
+      z-index: 1;
+    }
+
+    /* Smooth luxury gradient overlays to blend the hero image */
+    .hero-overlay-dark {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.75) 40%, rgba(5, 5, 5, 0.98) 100%);
+      z-index: 2;
+    }
+
+    .hero-glow-amber {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      right: -100px;
+      top: 10%;
+      background: radial-gradient(circle, rgba(255, 191, 0, 0.06) 0%, transparent 70%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+      z-index: 3;
+      position: relative;
+    }
+
+    .hero-text {
+      max-width: 620px;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .super-head {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .super-head::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 5vw, 68px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.65;
+      color: var(--gray-text);
+      margin-bottom: 40px;
+    }
+
+    /* 3D Glassmorphism Hero Form Card */
+    .hero-form-card {
+      background: rgba(14, 14, 16, 0.45);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0px rgba(255, 255, 255, 0.05);
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: border-color 0.4s, box-shadow 0.4s;
+    }
+
+    .hero-form-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 25px 60px rgba(212, 175, 55, 0.05), 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0px rgba(255, 255, 255, 0.08);
+    }
+
+    .form-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      color: var(--gray-text);
+      margin-bottom: 28px;
+    }
+
+    .form-submit-btn {
+      width: 100%;
+      padding: 18px;
+      margin-top: 10px;
+    }
+
+    .form-footer-note {
+      font-size: 12px;
+      color: rgba(134, 134, 139, 0.6);
+      text-align: center;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .form-footer-note svg {
+      width: 12px;
+      height: 12px;
+      color: var(--gold);
+    }
+
+    /* DIVIDER LINE */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 0;
+      opacity: 0.4;
+    }
+
+    .div-line-half {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    .div-star {
+      color: var(--gold);
+      font-size: 12px;
+    }
+
+    /* SECTIONS COMMON */
+    section {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    .section-intro {
+      max-width: 660px;
+      margin-bottom: 72px;
+    }
+
+    .section-intro .tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .section-intro h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-intro h2 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .section-intro p {
+      font-size: 16px;
+      color: var(--gray-text);
+    }
+
+    /* DOR SECTION (PAIN) */
+    .dor {
+      background: linear-gradient(180deg, var(--black-bg) 0%, #0a0a0c 50%, var(--black-bg) 100%);
+    }
+
+    .dor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .dor-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 32px;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .dor-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold-dark), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .dor-card:hover {
+      background: var(--black-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+
+    .dor-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .dor-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      margin-bottom: 24px;
+      transition: var(--transition-smooth);
+    }
+
+    .dor-card:hover .dor-icon-circle {
+      background: rgba(212, 175, 55, 0.1);
+      border-color: var(--gold);
+      transform: scale(1.05);
+    }
+
+    .dor-card-title {
+      font-size: 18px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .dor-card-text {
+      font-size: 14px;
+      color: var(--gray-text);
+      line-height: 1.6;
+    }
+
+    /* SOLUÇÃO SECTION & 3D INTERACTIVE MOCKUP */
+    .solucao {
+      overflow: hidden;
+    }
+
+    .solucao-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .solucao-desc-col {
+      max-width: 500px;
+    }
+
+    .solucao-desc-col h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .solucao-desc-col p {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    /* 3D Mockup Container */
+    .mockup-3d-wrapper {
+      position: relative;
+      width: 100%;
+      height: 520px;
+      perspective: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mockup-3d-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* CSS Laptop Mockup */
+    .laptop-frame {
+      position: absolute;
+      width: 480px;
+      height: 310px;
+      background: #121214;
+      border: 12px solid #28282d;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+      transform: translateZ(10px) rotateY(-5deg);
+      transform-style: preserve-3d;
+      overflow: hidden;
+      border-bottom: none;
+    }
+
+    /* Laptop Base */
+    .laptop-base {
+      position: absolute;
+      width: 530px;
+      height: 14px;
+      background: #444449;
+      border-radius: 0 0 10px 10px;
+      bottom: 85px;
+      left: calc(50% - 265px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      transform: translateZ(35px) rotateX(10deg);
+      border-top: 1px solid #666;
+    }
+
+    .laptop-base::after {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 6px;
+      background: #1e1e20;
+      border-radius: 0 0 4px 4px;
+      top: 0; left: calc(50% - 35px);
+    }
+
+    .laptop-screen-content {
+      width: 100%;
+      height: 100%;
+      background: #09090b;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+    }
+
+    /* Simulated Calendar Dashboard inside Laptop */
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1a1a20;
+      padding-bottom: 8px;
+    }
+
+    .dash-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .dash-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 9px;
+      color: #34c759;
+      background: rgba(52, 199, 89, 0.1);
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .dash-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #34c759;
+      animation: pulseGreen 2s infinite;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      flex: 1;
+    }
+
+    .calendar-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .cal-day-label {
+      font-size: 8px;
+      color: var(--gray-text);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .cal-slot {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .cal-slot.busy {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cal-slot.busy::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      background: rgba(134, 134, 139, 0.15);
+      border-radius: 2px;
+    }
+
+    .cal-slot.active-flow {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid var(--gold);
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+
+    .cal-slot.active-flow::after {
+      content: 'Confirmado';
+      position: absolute;
+      inset: 4px;
+      background: var(--gold);
+      color: #000;
+      font-size: 8px;
+      font-weight: 700;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn 0.3s ease;
+      letter-spacing: 0.02em;
+    }
+
+    /* CSS Phone Mockup overlapping */
+    .phone-frame {
+      position: absolute;
+      width: 200px;
+      height: 390px;
+      background: #16161a;
+      border: 8px solid #2d2d34;
+      border-radius: 28px;
+      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255,255,255,0.05);
+      right: 40px;
+      bottom: 40px;
+      transform: translateZ(90px) rotateY(-10deg) rotateX(5deg);
+      transform-style: preserve-3d;
+      overflow: hidden;
+    }
+
+    .phone-screen-content {
+      width: 100%;
+      height: 100%;
+      background: #0b0b0d;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Simulated Phone UI */
+    .phone-header {
+      background: #111115;
+      padding: 14px 10px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #1c1c24;
+    }
+
+    .phone-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gold-glow);
+      border: 1px solid var(--gold);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .phone-user-info {
+      flex: 1;
+    }
+
+    .phone-user-name {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--light-text);
+      line-height: 1.1;
+    }
+
+    .phone-user-status {
+      font-size: 7px;
+      color: #34c759;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .phone-status-dot {
+      width: 4px;
+      height: 4px;
+      background: #34c759;
+      border-radius: 50%;
+    }
+
+    .phone-chat-area {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: hidden;
+      justify-content: flex-end;
+    }
+
+    .chat-bubble {
+      max-width: 85%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 9px;
+      line-height: 1.35;
+      animation: bubbleReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .chat-bubble.sent {
+      background: #26262b;
+      color: var(--light-text);
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-bubble.received {
+      background: #1a1a24;
+      color: var(--light-text);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      border-left: 2px solid var(--gold);
+    }
+
+    .chat-options {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .chat-opt-btn {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 8px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .chat-opt-btn.clicked {
+      background: var(--gold);
+      color: #000;
+      transform: scale(0.95);
+    }
+
+    .chat-typing {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 8px 10px;
+      background: #1a1a24;
+      border-radius: 10px;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      width: 40px;
+      justify-content: center;
+    }
+
+    .typing-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--gray-text);
+      border-radius: 50%;
+      animation: typingAnimation 1.4s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* Animated connecting gold line */
+    .glowing-flow-line {
+      position: absolute;
+      width: 150px;
+      height: 100px;
+      pointer-events: none;
+      z-index: 5;
+      right: 150px;
+      bottom: 150px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .glowing-flow-line.active {
+      opacity: 1;
+    }
+
+    /* COMO FUNCIONA SECTION */
+    .como-funciona {
+      background: linear-gradient(180deg, var(--black-bg) 0%, #08080a 50%, var(--black-bg) 100%);
+    }
+
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    .step-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 48px 36px;
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .step-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .step-num {
+      font-size: 72px;
+      font-weight: 700;
+      color: rgba(212, 175, 55, 0.04);
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      line-height: 1;
+      font-family: var(--font-sans);
+    }
+
+    .step-card:hover .step-num {
+      color: rgba(212, 175, 55, 0.09);
+    }
+
+    .step-icon-wrapper {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.02) 0%, rgba(212, 175, 55, 0.08) 100%);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      margin-bottom: 30px;
+    }
+
+    .step-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .step-text {
+      font-size: 15px;
+      color: var(--gray-text);
+      line-height: 1.6;
+    }
+
+    /* BENEFÍCIOS SECTION */
+    .beneficios-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .benefit-card {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 24px;
+      text-align: center;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+
+    .benefit-card:hover {
+      background: var(--black-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-6px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .benefit-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 24px;
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      background: rgba(212, 175, 55, 0.03);
+      border-radius: 50%;
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      transition: var(--transition-smooth);
+    }
+
+    .benefit-card:hover .benefit-icon {
+      transform: rotate(10deg) scale(1.08);
+      background: rgba(212, 175, 55, 0.08);
+      border-color: var(--gold);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    .benefit-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--light-text);
+    }
+
+    .benefit-desc {
+      font-size: 13px;
+      color: var(--gray-text);
+      line-height: 1.55;
+    }
+
+    /* QUEM DEVE ENTRAR SECTION */
+    .quem-deve {
+      background: linear-gradient(180deg, var(--black-bg) 0%, #0c0c0e 50%, var(--black-bg) 100%);
+    }
+
+    .audience-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .audience-left {
+      max-width: 500px;
+    }
+
+    .audience-left h3 {
+      font-size: 36px;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .audience-left p {
+      font-size: 16px;
+      color: var(--gray-text);
+      line-height: 1.7;
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .audience-item {
+      background: var(--black-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: var(--transition-smooth);
+      cursor: pointer;
+    }
+
+    .audience-item:hover {
+      border-color: var(--border-hover);
+      transform: translateX(4px);
+      background: var(--black-card-hover);
+    }
+
+    .audience-indicator {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.05);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      flex-shrink: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .audience-item:hover .audience-indicator {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .audience-indicator svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .audience-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--light-text);
+    }
+
+    /* FUNDADORA SECTION */
+    .fundadora-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .founder-image-wrapper {
+      position: relative;
+      aspect-ratio: 4/5;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    /* Geometric gold border box */
+    .founder-frame {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: linear-gradient(160deg, rgba(212, 175, 55, 0.05) 0%, rgba(5, 5, 5, 0) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    /* Placeholder design for picture */
+    .founder-placeholder-icon {
+      width: 70px;
+      height: 70px;
+      color: rgba(212, 175, 55, 0.15);
+      margin-bottom: 16px;
+    }
+
+    .founder-placeholder-name {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    /* Golden corners on frame */
+    .founder-decor-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--gold);
+      z-index: 2;
+    }
+    .fd-top-left { top: -4px; left: -4px; border-right: none; border-bottom: none; }
+    .fd-bottom-right { bottom: -4px; right: -4px; border-left: none; border-top: none; }
+
+    .founder-quote {
+      font-size: 22px;
+      line-height: 1.5;
+      font-style: italic;
+      color: var(--gold-light);
+      border-left: 2px solid var(--gold);
+      padding-left: 28px;
+      margin: 32px 0;
+    }
+
+    .founder-text {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--gray-text);
+      margin-bottom: 32px;
+    }
+
+    .founder-cred-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .founder-cred {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--light-text);
+    }
+
+    .founder-cred-dot {
+      color: var(--gold);
+      font-size: 8px;
+      filter: drop-shadow(0 0 2px var(--gold));
+    }
+
+    /* FINAL LISTA VIP SECTION */
+    .lista-vip {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
+    }
+
+    .lista-vip::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
+
+    .vip-card-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .vip-card-wrapper h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .vip-card-wrapper p {
+      font-size: 16px;
+      color: var(--gray-text);
+      margin-bottom: 48px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .vip-form-box {
+      background: rgba(14, 14, 16, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px 40px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      text-align: left;
+    }
+
+    .vip-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .vip-form-grid-full {
+      grid-column: span 2;
+    }
+
+    .vip-submit-btn {
+      width: 100%;
+      padding: 18px;
+      margin-top: 14px;
+    }
+
+    /* SUCCESS STATE OVERLAY */
+    .form-success-overlay {
+      position: absolute;
+      inset: 0;
+      background: #0e0e10;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .form-success-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .success-icon-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(52, 199, 89, 0.1);
+      border: 2px solid #34c759;
+      display: grid;
+      place-items: center;
+      color: #34c759;
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px rgba(52, 199, 89, 0.2);
+    }
+
+    .success-icon-circle svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 60px 48px;
+      background: #030303;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .footer-logo-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .footer-logo-svg {
+      width: 32px;
+      height: 32px;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+
+    .footer-logo-text {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--light-text);
+      opacity: 0.9;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(134, 134, 139, 0.4);
+    }
+
+    /* ANIMATIONS & CLASS INJECTIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulseGreen {
+      0% {
+        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(52, 199, 89, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes bubbleReveal {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes typingAnimation {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE MEDIA QUERIES */
+    @media (max-width: 1024px) {
+      nav {
+        padding: 20px 24px;
+      }
+      
+      nav.scrolled {
+        padding: 14px 24px;
+      }
+
+      .hero {
+        padding-top: 120px;
+      }
+
+      .hero-content-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+      }
+
+      .hero-text {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-form-card {
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .solucao-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+        text-align: center;
+      }
+
+      .solucao-desc-col {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .mockup-3d-wrapper {
+        height: 480px;
+      }
+
+      .audience-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+      }
+
+      .audience-left {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .audience-grid {
+        max-width: 600px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .fundadora-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+      }
+
+      .founder-image-wrapper {
+        max-width: 320px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      section {
+        padding: 80px 0;
+      }
+
+      .dor-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .beneficios-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 550px) {
+      nav .nav-btn {
+        display: none;
+      }
+
+      .vip-form-box {
+        padding: 32px 20px;
+      }
+
+      .vip-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vip-form-grid-full {
+        grid-column: span 1;
+      }
+
+      .beneficios-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GEOMETRIC WOLF LOGO SVG MACRO DEFINITION -->
+  <svg style="display: none;">
+    <g id="wolf-head">
+      <path d="M50 12 L28 32 L22 14 L39 39 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M50 12 L72 32 L78 14 L61 39 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M39 39 L50 32 L61 39 L50 60 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M28 32 L18 50 L39 55 L39 39 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M72 32 L82 50 L61 55 L61 39 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M39 55 L50 82 L61 55 L50 60 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M18 50 L39 70 L50 82 L39 55 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <path d="M82 50 L61 70 L50 82 L61 55 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+      <polygon points="41,47 46,48 43,51" fill="currentColor" stroke="none" />
+      <polygon points="59,47 54,48 57,51" fill="currentColor" stroke="none" />
+    </g>
+  </svg>
+
+  <!-- NAVIGATION -->
+  <nav id="nav">
+    <a href="#" class="nav-logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100">
+        <use href="#wolf-head" />
+      </svg>
+      <span class="logo-text">Loba<span>Flow</span></span>
+    </a>
+    <a href="#cadastro" class="btn nav-btn">Entrar na Lista VIP</a>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay-dark"></div>
+    <div class="hero-glow-amber"></div>
+    
+    <div class="container">
+      <div class="hero-content-grid">
+        
+        <!-- Hero Text -->
+        <div class="hero-text">
+          <div class="super-head">Exclusivo para Mulheres Empreendedoras</div>
+          <h1>Sua agenda pode <em>funcionar sozinha.</em></h1>
+          <p class="hero-sub">
+            O Loba Flow responde, organiza e agenda seus clientes automaticamente no WhatsApp enquanto você trabalha, descansa ou atende.
+          </p>
+        </div>
+
+        <!-- 3D Form Card (1st Waiting List Capture) -->
+        <div class="hero-form-card" data-tilt>
+          <div class="form-success-overlay" id="hero-success-overlay">
+            <div class="success-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3 class="form-title">Inscrição Confirmada!</h3>
+            <p class="form-subtitle">Você acabou de garantir sua posição na Lista VIP com exclusividade. Fique atenta ao seu WhatsApp!</p>
+          </div>
+
+          <h3 class="form-title">Quero Entrar na Lista VIP</h3>
+          <p class="form-subtitle">Cadastre-se para obter acesso antecipado e condições especiais.</p>
+          
+          <form id="hero-waitlist-form" onsubmit="handleFormSubmit(event, 'hero')">
+            <div class="input-group">
+              <input type="text" id="hero-nome" class="form-input" placeholder=" " required autocomplete="name">
+              <label for="hero-nome">Nome Completo</label>
+            </div>
+            <div class="input-group">
+              <input type="tel" id="hero-whatsapp" class="form-input tel-input" placeholder=" " required autocomplete="tel">
+              <label for="hero-whatsapp">WhatsApp (com DDD)</label>
+            </div>
+            <button type="submit" class="btn form-submit-btn">Garantir Meu Acesso VIP</button>
+            <div class="form-footer-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+                <path d="M7 11V7a5 5 0 0110 0v4" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              Dados seguros. Sem spam.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- DOR SECTION (PAIN) -->
+  <section class="dor">
+    <div class="container">
+      <div class="section-intro reveal">
+        <span class="tag">O Desafio do Atendimento</span>
+        <h2>Você se identifica com <em>isso no seu dia a dia?</em></h2>
+        <p>A rotina de atender clientes de forma manual drena sua energia e limita seu faturamento.</p>
+      </div>
+
+      <div class="dor-grid">
+        <!-- Card 1 -->
+        <div class="dor-card reveal">
+          <div class="dor-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"></circle>
+              <polyline points="12 6 12 12 16 14" stroke-linecap="round" stroke-linejoin="round"></polyline>
+            </svg>
+          </div>
+          <h3 class="dor-card-title">Celular Apitando o Dia Inteiro</h3>
+          <p class="dor-card-text">Clientes perguntando sobre horários, valores e serviços a qualquer hora, exigindo respostas imediatas para não sumirem.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="dor-card reveal">
+          <div class="dor-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="dor-card-title">Mensagens Repetitivas</h3>
+          <p class="dor-card-text">Você passa horas copiando e colando os mesmos textos explicativos, enviando fotos de portfólio e tabelas de horários.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="dor-card reveal">
+          <div class="dor-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M16 3.13a4 4 0 010 7.75" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="dor-card-title">Interesses que Esfriam</h3>
+          <p class="dor-card-text">Clientes mandam mensagem interessadas, mas quando você finalmente responde horas depois, elas já desistiram ou perderam o interesse.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="dor-card reveal">
+          <div class="dor-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="16" y1="2" x2="16" y2="6" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="8" y1="2" x2="8" y2="6" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="3" y1="10" x2="21" y2="10" stroke-linecap="round" stroke-linejoin="round"></line>
+            </svg>
+          </div>
+          <h3 class="dor-card-title">Agenda Desorganizada</h3>
+          <p class="dor-card-text">Marcações manuais em papel, conversas perdidas no meio do feed do WhatsApp e horários anotados incorretamente.</p>
+        </div>
+        <!-- Card 5 -->
+        <div class="dor-card reveal">
+          <div class="dor-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+              <line x1="12" y1="9" x2="12" y2="13" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17" stroke-linecap="round" stroke-linejoin="round"></line>
+            </svg>
+          </div>
+          <h3 class="dor-card-title">Buracos na Agenda</h3>
+          <p class="dor-card-text">Clientes que desmarcam de última hora e deixam janelas vazias na sua semana que poderiam ter sido preenchidas por outros interessados.</p>
+        </div>
+        <!-- Card 6 -->
+        <div class="dor-card reveal">
+          <div class="dor-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18" stroke-linecap="round" stroke-linejoin="round"></line>
+            </svg>
+          </div>
+          <h3 class="dor-card-title">Prisão ao Celular</h3>
+          <p class="dor-card-text">Aquela sensação terrível de que se você não estiver olhando para a tela do celular a cada 5 minutos, está perdendo faturamento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- SOLUÇÃO SECTION & 3D INTERACTIVE MOCKUP -->
+  <section class="solucao">
+    <div class="container">
+      <div class="solucao-grid">
+        
+        <!-- Left text content -->
+        <div class="solucao-desc-col reveal">
+          <span class="tag">A Revolução na Automação</span>
+          <h3>Conheça o Loba Flow</h3>
+          <p>
+            O Loba Flow é um sistema inteligente de automação desenvolvido para mulheres de negócios. Ele assume a conversa no seu WhatsApp, atende novos contatos, apresenta seus serviços, sugere horários disponíveis e fecha o agendamento de forma automática.
+          </p>
+          <p style="margin-bottom: 20px;">
+            Enquanto você atende um cliente ou aproveita seu momento de descanso, a inteligência do Loba Flow garante que nenhum lead fique sem resposta imediata.
+          </p>
+          <a href="#cadastro" class="btn">Garantir Meu Acesso VIP</a>
+        </div>
+
+        <!-- Right 3D Interactive Mockup -->
+        <div class="mockup-3d-wrapper reveal">
+          <div class="mockup-3d-container" id="mockup-3d-container">
+            
+            <!-- Laptop Background Mockup -->
+            <div class="laptop-frame">
+              <div class="laptop-screen-content">
+                <div class="dash-header">
+                  <span class="dash-title">Loba Flow Dashboard</span>
+                  <span class="dash-status">
+                    <span class="dash-status-dot"></span>
+                    Automação Ativa
+                  </span>
+                </div>
+                
+                <div class="calendar-grid">
+                  <div class="calendar-col">
+                    <span class="cal-day-label">Seg</span>
+                    <div class="cal-slot busy"></div>
+                    <div class="cal-slot"></div>
+                    <div class="cal-slot busy"></div>
+                  </div>
+                  <div class="calendar-col">
+                    <span class="cal-day-label">Ter</span>
+                    <div class="cal-slot"></div>
+                    <div class="cal-slot busy"></div>
+                    <div class="cal-slot"></div>
+                  </div>
+                  <div class="calendar-col">
+                    <span class="cal-day-label">Qua</span>
+                    <div class="cal-slot busy"></div>
+                    <div class="cal-slot busy"></div>
+                    <div class="cal-slot"></div>
+                  </div>
+                  <div class="calendar-col">
+                    <span class="cal-day-label">Qui</span>
+                    <div class="cal-slot"></div>
+                    <div class="cal-slot" id="target-cal-slot"></div>
+                    <div class="cal-slot busy"></div>
+                  </div>
+                  <div class="calendar-col">
+                    <span class="cal-day-label">Sex</span>
+                    <div class="cal-slot busy"></div>
+                    <div class="cal-slot"></div>
+                    <div class="cal-slot"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="laptop-base"></div>
+
+            <!-- Overlapping Phone Mockup (Front Layer) -->
+            <div class="phone-frame">
+              <div class="phone-screen-content">
+                <div class="phone-header">
+                  <div class="phone-avatar">LF</div>
+                  <div class="phone-user-info">
+                    <div class="phone-user-name">Loba Assistant</div>
+                    <div class="phone-user-status">
+                      <span class="phone-status-dot"></span>Online
+                    </div>
+                  </div>
+                </div>
+
+                <div class="phone-chat-area" id="simulated-chat-area">
+                  <!-- Animated chat bubbles will be generated dynamically by JavaScript -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Animated flowing light path (connecting phone to laptop screen) -->
+            <svg class="glowing-flow-line" id="flow-line-svg" viewBox="0 0 100 100" fill="none">
+              <path d="M90,70 Q50,40 20,40" stroke="var(--gold)" stroke-width="2" stroke-dasharray="5,5" stroke-dashoffset="0" id="flow-path-animation" />
+            </svg>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- COMO FUNCIONA SECTION -->
+  <section class="como-funciona">
+    <div class="container">
+      <div class="section-intro reveal" style="text-align: center; margin-left: auto; margin-right: auto;">
+        <span class="tag">Simplicidade & Tecnologia</span>
+        <h2>Como funciona o <em>Loba Flow?</em></h2>
+        <p>Um fluxo inteligente em 3 etapas simples para automatizar sua agenda sem atritos.</p>
+      </div>
+
+      <div class="steps-container">
+        <!-- Step 1 -->
+        <div class="step-card reveal">
+          <div class="step-num">01</div>
+          <div class="step-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="step-title">Cliente Envia Mensagem</h3>
+          <p class="step-text">Seja pelo seu link da bio ou contato direto, a cliente inicia a conversa demonstrando interesse em agendar ou conhecer seus serviços.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card reveal">
+          <div class="step-num">02</div>
+          <div class="step-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2 12 2" stroke-linecap="round" stroke-linejoin="round"></polygon>
+              <polyline points="2 17 12 22 22 17" stroke-linecap="round" stroke-linejoin="round"></polyline>
+              <polyline points="2 12 12 17 22 12" stroke-linecap="round" stroke-linejoin="round"></polyline>
+            </svg>
+          </div>
+          <h3 class="step-title">Atendimento Instantâneo</h3>
+          <p class="step-text">O Loba Flow entra em ação imediatamente. Ele tira dúvidas frequentes, apresenta seu menu de serviços e exibe as vagas livres na sua agenda.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card reveal">
+          <div class="step-num">03</div>
+          <div class="step-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="16" y1="2" x2="16" y2="6" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="8" y1="2" x2="8" y2="6" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="3" y1="10" x2="21" y2="10" stroke-linecap="round" stroke-linejoin="round"></line>
+              <path d="M8 14l3 3 5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="step-title">Horário Confirmado</h3>
+          <p class="step-text">A cliente seleciona o horário ideal, o Loba Flow bloqueia a vaga no calendário e envia as orientações de pagamento e lembretes para ela.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- BENEFÍCIOS SECTION -->
+  <section class="beneficios">
+    <div class="container">
+      <div class="section-intro reveal" style="text-align: center; margin-left: auto; margin-right: auto;">
+        <span class="tag">Benefícios Exclusivos</span>
+        <h2>O que você ganha com o <em>Loba Flow?</em></h2>
+        <p>A união perfeita de liberdade de tempo com um aumento expressivo no agendamento de clientes.</p>
+      </div>
+
+      <div class="beneficios-grid">
+        <!-- Benefit 1 -->
+        <div class="benefit-card reveal" data-tilt>
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"></circle>
+              <polyline points="12 6 12 12 16 14" stroke-linecap="round" stroke-linejoin="round"></polyline>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Mais Tempo</h3>
+          <p class="benefit-desc">Elimine as tarefas operacionais repetitivas e foque no que você faz de melhor: atender seus clientes.</p>
+        </div>
+
+        <!-- Benefit 2 -->
+        <div class="benefit-card reveal" data-tilt>
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="16" y1="2" x2="16" y2="6" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="8" y1="2" x2="8" y2="6" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="3" y1="10" x2="21" y2="10" stroke-linecap="round" stroke-linejoin="round"></line>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Mais Organização</h3>
+          <p class="benefit-desc">Uma agenda inteligente sincronizada em tempo real. Sem risco de overbooking ou conflito de horários.</p>
+        </div>
+
+        <!-- Benefit 3 -->
+        <div class="benefit-card reveal" data-tilt>
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"></circle>
+              <path d="M23 21v-2a4 4 0 00-3-3.87" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M16 3.13a4 4 0 010 7.75" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Mais Clientes</h3>
+          <p class="benefit-desc">Aproveite todo o tráfego e interesse de leads imediatamente, capturando clientes no pico do desejo de compra.</p>
+        </div>
+
+        <!-- Benefit 4 -->
+        <div class="benefit-card reveal" data-tilt>
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-title">Mais Liberdade</h3>
+          <p class="benefit-desc">Tenha a paz de espírito de saber que sua empresa está operando e fechando novas vendas sem a sua presença física.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- QUEM DEVE ENTRAR SECTION -->
+  <section class="quem-deve">
+    <div class="container">
+      <div class="audience-layout">
+        
+        <!-- Left Side Info -->
+        <div class="audience-left reveal">
+          <span class="tag">Para quem é o Loba Flow</span>
+          <h3>Foi feito para o seu modelo de negócio?</h3>
+          <p>
+            O Loba Flow foi desenvolvido especificamente para prestadoras de serviços e profissionais liberais que trabalham com agendamentos individuais ou em grupo. 
+          </p>
+          <p style="margin-top: 16px;">
+            A estrutura se molda perfeitamente para entregar uma experiência de atendimento luxuosa aos seus clientes.
+          </p>
+        </div>
+
+        <!-- Right Side Grid Items -->
+        <div class="audience-grid">
+          <!-- Item 1 -->
+          <div class="audience-item reveal">
+            <div class="audience-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="audience-name">Terapeutas / Psicólogas</span>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="audience-item reveal">
+            <div class="audience-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="audience-name">Nutricionistas</span>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="audience-item reveal">
+            <div class="audience-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="audience-name">Consultoras / Mentoras</span>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="audience-item reveal">
+            <div class="audience-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="audience-name">Prestadoras de Serviço</span>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="audience-item reveal">
+            <div class="audience-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="audience-name">Pequenos Negócios</span>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="audience-item reveal">
+            <div class="audience-indicator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <span class="audience-name">Clínicas & Studios</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- FUNDADORA SECTION -->
+  <section class="fundadora">
+    <div class="container">
+      <div class="fundadora-grid">
+        
+        <!-- Founder photo frame -->
+        <div class="founder-image-wrapper reveal">
+          <div class="founder-frame">
+            <div class="founder-decor-corner fd-top-left"></div>
+            <div class="founder-decor-corner fd-bottom-right"></div>
+            <!-- Sleek SVG avatar framework -->
+            <svg class="founder-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span class="founder-placeholder-name">Ana Gabriele Melo</span>
+          </div>
+        </div>
+
+        <!-- Biography text -->
+        <div class="reveal">
+          <span class="tag">Quem Criou o Sistema</span>
+          <blockquote class="founder-quote">
+            "Depois de mais de 14 anos trabalhando com marketing digital e automação, percebi que muitas mulheres perdiam clientes simplesmente porque não conseguiam responder tudo a tempo. Foi daí que nasceu o Loba Flow."
+          </blockquote>
+          <p class="founder-text">
+            Ana Gabriele é estrategista digital, mentora e especialista em inteligência artificial e processos automatizados. Ao longo de sua carreira, focou no desenvolvimento de estruturas digitais que proporcionem independência operacional e liberdade para negócios liderados por mulheres.
+          </p>
+          <div class="founder-cred-list">
+            <div class="founder-cred">
+              <span class="founder-cred-dot">✦</span> Professora de IA na Secretaria da Mulher do GDF
+            </div>
+            <div class="founder-cred">
+              <span class="founder-cred-dot">✦</span> Parceira do SEBRAE/DF no programa ALI
+            </div>
+            <div class="founder-cred">
+              <span class="founder-cred-dot">✦</span> Fundadora da Estratégia Digital
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="divider">
+    <div class="div-line-half"></div>
+    <div class="div-star">✦</div>
+    <div class="div-line-half"></div>
+  </div>
+
+  <!-- FINAL LISTA VIP SECTION -->
+  <section class="lista-vip" id="cadastro">
+    <div class="container">
+      <div class="vip-card-wrapper">
+        <span class="tag">Inscrições Limitadas</span>
+        <h2>Estamos selecionando as primeiras participantes.</h2>
+        <p>As primeiras inscritas terão acesso antecipado, condições exclusivas de lançamento e poderão ajudar a modelar a versão final do sistema.</p>
+        
+        <div class="vip-form-box reveal" data-tilt>
+          <div class="form-success-overlay" id="vip-success-overlay">
+            <div class="success-icon-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3 class="form-title">Você está na Lista VIP!</h3>
+            <p class="form-subtitle">Enviaremos os próximos passos e detalhes do acesso antecipado diretamente no seu WhatsApp.</p>
+          </div>
+
+          <form id="vip-waitlist-form" onsubmit="handleFormSubmit(event, 'vip')">
+            <div class="vip-form-grid">
+              
+              <div class="input-group">
+                <input type="text" id="vip-nome" class="form-input" placeholder=" " required autocomplete="name">
+                <label for="vip-nome">Nome Completo</label>
+              </div>
+              
+              <div class="input-group">
+                <input type="tel" id="vip-whatsapp" class="form-input tel-input" placeholder=" " required autocomplete="tel">
+                <label for="vip-whatsapp">WhatsApp (com DDD)</label>
+              </div>
+
+              <div class="input-group vip-form-grid-full">
+                <input type="email" id="vip-email" class="form-input" placeholder=" " required autocomplete="email">
+                <label for="vip-email">Endereço de E-mail</label>
+              </div>
+              
+              <div class="vip-form-grid-full">
+                <button type="submit" class="btn vip-submit-btn">Quero Ser Uma Das Primeiras</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo-box">
+      <svg class="footer-logo-svg" viewBox="0 0 100 100">
+        <use href="#wolf-head" />
+      </svg>
+      <span class="footer-logo-text">Loba<span>Flow</span></span>
+    </a>
+    
+    <div class="footer-links">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos de Uso</a>
+      <a href="https://wa.me/5561983615244" target="_blank">Contato</a>
+    </div>
+
+    <span class="footer-copy">© 2026 Estratégia Digital. Todos os direitos reservados.</span>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 1. Navigation Scroll Effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // 2. Intersection Observer (Scroll Reveal)
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('on');
+          revealObserver.unobserve(entry.target); // Trigger animation only once
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+      revealObserver.observe(el);
+    });
+
+    // 3. Portuguese WhatsApp Input Mask
+    document.querySelectorAll('.tel-input').forEach(input => {
+      input.addEventListener('input', e => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 11) value = value.slice(0, 11);
+        
+        let formatted = '';
+        if (value.length > 0) {
+          formatted = '(' + value.slice(0, 2);
+          if (value.length > 2) {
+            formatted += ') ' + value.slice(2, 7);
+            if (value.length > 7) {
+              formatted += '-' + value.slice(7);
+            }
+          }
+        }
+        e.target.value = formatted;
+      });
+    });
+
+    // 4. Form Submission Mock Handling
+    function handleFormSubmit(event, formType) {
+      event.preventDefault();
+      
+      const successOverlay = document.getElementById(`${formType}-success-overlay`);
+      if (successOverlay) {
+        successOverlay.classList.add('active');
+        
+        // Log Waitlist Sign-up to local console / localstorage for representation
+        const nome = document.getElementById(`${formType}-nome`).value;
+        const whatsapp = document.getElementById(`${formType}-whatsapp`).value;
+        const email = document.getElementById(`${formType}-email`) ? document.getElementById(`${formType}-email`).value : '';
+        
+        console.log(`[Lista VIP - Loba Flow] Novo Cadastro (${formType}):`, { nome, whatsapp, email, timestamp: new Date().toISOString() });
+        
+        // Optional webhook pipeline integration placeholder:
+        // fetch('YOUR_WEBHOOK_URL', { method: 'POST', body: JSON.stringify({...}) })
+      }
+    }
+
+    // 5. 3D Tilt Hover Effect on Cards
+    const tiltElements = document.querySelectorAll('[data-tilt]');
+    
+    tiltElements.forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((centerY - y) / centerY) * 10; // Max 10 degrees tilt
+        const rotateY = ((x - centerX) / centerX) * 10;
+        
+        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+      
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        el.style.transition = 'transform 0.5s ease';
+      });
+      
+      el.addEventListener('mouseenter', () => {
+        el.style.transition = 'none';
+      });
+    });
+
+    // 6. Interactive 3D Mockup Mouse Follower (Laptop & Phone Coordinate Tilt)
+    const mockupContainer = document.getElementById('mockup-3d-container');
+    const mockupWrapper = document.querySelector('.mockup-3d-wrapper');
+    
+    if (mockupWrapper && mockupContainer) {
+      mockupWrapper.addEventListener('mousemove', e => {
+        const rect = mockupWrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((centerY - y) / centerY) * 15; // Max 15 degrees tilt
+        const rotateY = ((x - centerX) / centerX) * -15; // Invert axis for realistic feel
+        
+        mockupContainer.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      
+      mockupWrapper.addEventListener('mouseleave', () => {
+        mockupContainer.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        mockupContainer.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+      });
+      
+      mockupWrapper.addEventListener('mouseenter', () => {
+        mockupContainer.style.transition = 'none';
+      });
+    }
+
+    // 7. Dynamic Simulated Chat Automation & Calendar Flow
+    const chatArea = document.getElementById('simulated-chat-area');
+    const targetSlot = document.getElementById('target-cal-slot');
+    const flowLine = document.getElementById('flow-line-svg');
+
+    const conversationData = [
+      { sender: 'sent', text: 'Olá, gostaria de agendar uma consulta.' },
+      { sender: 'received', text: 'Olá! Sou o assistente automático da Dra. Amanda. 🐺 Como posso te ajudar hoje?' },
+      { sender: 'sent', text: 'Quero ver os horários para esta semana, por favor.' },
+      { sender: 'received', text: 'Temos horários disponíveis! Qual o melhor dia?', options: ['Terça-feira', 'Quinta-feira', 'Sexta-feira'] },
+      { sender: 'sent', text: 'Quinta-feira à tarde.' },
+      { sender: 'received', text: 'Perfeito! Para Quinta-feira, selecione a hora ideal:', options: ['14:00', '15:30 (Vaga VIP)', '17:00'], clickIndex: 1 },
+      { sender: 'sent', text: 'Quero o horário das 15:30.' },
+      { sender: 'received', text: 'Agendamento pré-confirmado! 🎉 Enviamos as instruções de pagamento para seu WhatsApp.' }
+    ];
+
+    let currentMsgIndex = 0;
+    
+    function appendChatBubble(msgObj) {
+      if (!chatArea) return;
+      
+      // typing state simulation
+      const typingIndicator = document.createElement('div');
+      typingIndicator.className = 'chat-typing';
+      typingIndicator.innerHTML = '<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
+      
+      chatArea.appendChild(typingIndicator);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      const replyDelay = msgObj.sender === 'received' ? 1800 : 800;
+
+      setTimeout(() => {
+        typingIndicator.remove();
+        
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${msgObj.sender}`;
+        bubble.innerText = msgObj.text;
+        chatArea.appendChild(bubble);
+
+        // If there are choice buttons (options)
+        if (msgObj.options) {
+          const optContainer = document.createElement('div');
+          optContainer.className = 'chat-options';
+          msgObj.options.forEach((optText, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'chat-opt-btn';
+            btn.innerText = optText;
+            
+            // Simulating click selection
+            if (msgObj.clickIndex !== undefined && index === msgObj.clickIndex) {
+              setTimeout(() => {
+                btn.classList.add('clicked');
+              }, 1200);
+            }
+            optContainer.appendChild(btn);
+          });
+          chatArea.appendChild(optContainer);
+        }
+
+        chatArea.scrollTop = chatArea.scrollHeight;
+        
+        // Sincronização com o Calendário no Laptop (Mockup 3D integration)
+        if (msgObj.text.includes('15:30') && msgObj.sender === 'sent') {
+          setTimeout(() => {
+            // Trigger glowing connecting flow line
+            if (flowLine) flowLine.classList.add('active');
+            
+            // Fill Calendar slot
+            setTimeout(() => {
+              if (targetSlot) targetSlot.classList.add('active-flow');
+              if (flowLine) flowLine.classList.remove('active');
+            }, 600);
+          }, 800);
+        }
+
+        // Loop to next step
+        currentMsgIndex++;
+        if (currentMsgIndex < conversationData.length) {
+          setTimeout(() => {
+            appendChatBubble(conversationData[currentMsgIndex]);
+          }, 1000);
+        } else {
+          // Restart loop after 7 seconds
+          setTimeout(restartChatAutomation, 7000);
+        }
+      }, replyDelay);
+    }
+
+    function restartChatAutomation() {
+      if (!chatArea) return;
+      chatArea.innerHTML = '';
+      if (targetSlot) targetSlot.className = 'cal-slot';
+      if (flowLine) flowLine.classList.remove('active');
+      currentMsgIndex = 0;
+      appendChatBubble(conversationData[0]);
+    }
+
+    // Start simulation when the Solução section is visible or immediately
+    setTimeout(() => {
+      restartChatAutomation();
+    }, 1500);
+
+  </script>
+</body>
+</html>
