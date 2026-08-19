@@ -336,6 +336,10 @@ h2 em { font-style: italic; color: var(--ouro-claro); }
 .cta-garantia span::before { content: '✓'; color: var(--ouro); }
 
 /* FOOTER */
+.bussola-section { background: var(--preto-medio); }
+.bussola-section .sec-texto { max-width: 650px; margin-bottom: 42px; }
+.bussola-embed { background: #171717; border: 1px solid var(--borda); overflow: hidden; min-height: 1250px; }
+.bussola-embed iframe { display: block; width: 100%; height: 1450px; min-height: 1250px; border: 0; background: #171717; }
 footer { border-top: 1px solid var(--borda); padding: 36px 48px; display: flex; justify-content: space-between; align-items: center; }
 .footer-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--ouro); letter-spacing: 0.1em; }
 .footer-links { display: flex; gap: 24px; }
@@ -360,6 +364,8 @@ footer { border-top: 1px solid var(--borda); padding: 36px 48px; display: flex; 
   .palestras-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; gap: 20px; text-align: center; }
   .div-linha { padding: 0 24px; }
+  .bussola-section { padding: 70px 20px; }
+  .bussola-embed, .bussola-embed iframe { min-height: 1500px; height: 1700px; }
 }
 </style>
 </head>
@@ -373,7 +379,7 @@ footer { border-top: 1px solid var(--borda); padding: 36px 48px; display: flex; 
     <li><a href="#palestras">Palestras</a></li>
     <li><a href="#sobre">Ana Gabriele</a></li>
   </ul>
-  <a href="https://pay.kiwify.com.br/BUh8QFM" class="nav-cta" target="_blank">Fazer o teste</a>
+  <a href="#bussola" class="nav-cta">Fazer o diagnóstico</a>
 </nav>
 
 <!-- HERO -->
@@ -662,6 +668,20 @@ footer { border-top: 1px solid var(--borda); padding: 36px 48px; display: flex; 
 
 <div class="div-linha"><div class="div-linha-traco"></div><div class="div-linha-icon">✦ ✦ ✦</div><div class="div-linha-traco"></div></div>
 
+<!-- BÚSSOLA DIGITAL -->
+<section class="bussola-section" id="bussola">
+  <div class="container">
+    <p class="tag">Bússola Digital</p>
+    <h2 class="rev">Descubra sua direção<br><em>no digital.</em></h2>
+    <p class="sec-texto rev">Responda às cinco perguntas diretamente nesta página. Informe seu nome e e-mail para receber uma leitura alinhada ao seu momento.</p>
+    <div class="bussola-embed rev">
+      <iframe src="https://tally.so/r/2EdBDb" title="Diagnóstico Bússola Digital" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="div-linha"><div class="div-linha-traco"></div><div class="div-linha-icon">✦ ✦ ✦</div><div class="div-linha-traco"></div></div>
+
 <!-- CTA FINAL -->
 <section class="cta-final" id="comecar">
   <div class="cta-glow"></div>
@@ -673,7 +693,7 @@ footer { border-top: 1px solid var(--borda); padding: 36px 48px; display: flex; 
       <span class="preco-valor">R$ 97,00</span>
       <span class="preco-label">Acesso imediato, sem mensalidade</span>
     </div>
-    <a href="https://pay.kiwify.com.br/BUh8QFM" class="btn" style="font-size:15px; padding: 22px 52px;" target="_blank">
+    <a href="#bussola" class="btn" style="font-size:15px; padding: 22px 52px;">
       <span>Fazer o Teste de Arquétipo</span>
       <span class="btn-seta">→</span>
     </a>
